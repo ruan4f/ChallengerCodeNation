@@ -19,10 +19,9 @@ class App extends Component {
         <Navbar />
         <div className="container mt-10">
           <div className="row">
-            <RecipeItem />
-            <RecipeItem />
-            <RecipeItem />
-            <RecipeItem />
+          {
+            this.recipes.map((item, index) => <RecipeItem key={index} item={item}/>)
+          }
           </div>
         </div>
       </div>
