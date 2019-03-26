@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Navbar from './Navbar'
-import RecipeItem from './RecipeItem'
-import recipes from '../sample_data/recipes.json'
+import React, { Component } from "react";
+import Navbar from "./Navbar";
+import RecipeItem from "./RecipeItem";
+import recipes from "../sample_data/recipes.json";
 
 class App extends Component {
   constructor(props) {
@@ -9,25 +9,26 @@ class App extends Component {
 
     this.recipes = recipes.results;
     this.state = {
-      searchString: ''
+      searchString: ""
     };
   }
 
-  handlerSearch = (e) => {
-    this.setState({ searchString: e.target.value });
-  }
+  filterRecipes = () => {
+    const { searchString } = this.state;
 
-  filter = (searchString) => {
     return this.recipes.filter(
       ({ title, ingredients }) =>
-        title.toLowerCase().includes(searchString.toLowerCase()) ||
-        ingredients.toLowerCase().includes(searchString.toLowerCase())
+        title.toLowerCase().includes(searchString) ||
+        ingredients.toLowerCase().includes(searchString)
     );
-  }
+  };
+
+  onSearch = searchString => {
+    this.setState({ searchString });
+  };
 
   render() {
-    const { searchString } = this.state;
-    const filteredRecipes = this.filter(searchString);
+    const filteredRecipes = this.filterRecipes();
 
     const recipes = filteredRecipes.map((recipe, index) => (
       <RecipeItem
@@ -39,17 +40,15 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Navbar searchString={this.state.searchString} handlerChange={this.handlerSearch} />
+        <Navbar onSearch={this.onSearch} />
         <div className="container mt-10">
-          {
-            recipes.length ?
-              (<div className="row">{recipes}</div>) :
-              (
-                <div className="d-flex justify-content-center pt-5">
-                  <h5 className="card-title">No Results to show</h5>
-                </div>
-              )
-          }
+          {recipes.length ? (
+            <div className="row">{recipes}</div>
+          ) : (
+              <div className="d-flex justify-content-center pt-5">
+                <h5 className="card-title">No Results to show</h5>
+              </div>
+            )}
         </div>
       </div>
     );

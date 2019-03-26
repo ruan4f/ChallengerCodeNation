@@ -1,23 +1,24 @@
-import React from 'react'
-import logo from '../logo.svg';
+import React from "react";
+import logo from "../logo.svg";
 
-const Navbar = ({ searchString, handlerChange }) => (
-    <nav className="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
-        <div className="navbar-brand col-1">
-            <img src={logo} className="Navbar-logo" alt="logo" />
-        </div>
+const Navbar = ({ onSearch }) => (
+  <nav className="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+    <div className="navbar-brand col-1">
+      <img src={logo} className="Navbar-logo" alt="logo" />
+    </div>
 
-        <div className="form-group justify-content-center row col-10 my-2">
-            <input
-                value={searchString}
-                onChange={(e) => handlerChange(e)}
-                className="form-control col-9 mr-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-            />
-        </div>
-    </nav>
-)
+    <div className="form-group justify-content-center row col-10 my-2">
+      <input
+        onChange={e => {
+          onSearch(e.target.value.toLowerCase());
+        }}
+        className="form-control col-9 mr-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+    </div>
+  </nav>
+);
 
 export default Navbar;
